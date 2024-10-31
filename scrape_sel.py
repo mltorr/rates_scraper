@@ -28,15 +28,20 @@ graph_config = {
 
 def json_to_dataframe(json_data):
     try:
+        # Check if updated_tables is a dictionary or a list
         if 'Rates for fuel acquired' in json_data:
             rates_data = json_data['Rates for fuel acquired']
             all_rows = []
+
+            # Iterate through tables
             for table_name, table in rates_data.items():
-                title = table['Period']
+                title = table['Period']  # Use 'Period' as title
                 for entry in table['Data']:
                     row = {'Title': title}
-                    row.update(entry)
+                    row.update(entry)  # Add the rest of the entry
                     all_rows.append(row)
+
+            # Create DataFrame
             df = pd.DataFrame(all_rows)
             return df
         else:
